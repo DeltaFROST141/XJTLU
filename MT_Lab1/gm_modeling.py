@@ -34,7 +34,7 @@ def gm_parameters(x):
         x (numpy array): loss trace (1 -> loss)
     """
     y = ''.join(map(str, x))
-    
+
     # find overlapping matching by lookaread assertion:
     # https://stackoverflow.com/questions/5616822/how-to-use-regex-to-find-all-overlapping-matches
     n1 = len(re.findall('(?=1)', y)) # or "n1 = sum(x1)"
@@ -49,7 +49,7 @@ def gm_parameters(x):
     try:
         c = n111/(n101 + n111)
     except ZeroDivisionError as e:
-        print("Error: " + str(e))
+        print(f"Error: {str(e)}")
         print("Now we use the alternative estimation based on h=0.5.\n")
         h = 0.5 # see page 1261 of [1]
         q = 1 - 2*b
@@ -69,8 +69,8 @@ if __name__ == "__main__":
         "dataset-A-adsl1-cbr6.0-20090628-223500", 
     ]
     for fname in fnames:
-        x1 = np.fromfile(fname+".bitmap", dtype=int, sep=" ")       
-        
+        x1 = np.fromfile(f"{fname}.bitmap", dtype=int, sep=" ")       
+
         # GM parameters
         p, q, h = gm_parameters(x1)
         print(f'p={p:.4E}, q={q:.4E}, h={h:.4E}')

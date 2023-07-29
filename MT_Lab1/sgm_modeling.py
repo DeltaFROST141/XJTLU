@@ -55,7 +55,7 @@ if __name__ == "__main__":
         "dataset-A-adsl1-cbr6.0-20090628-223500", 
     ]
     for fname in fnames:
-        x1 = np.fromfile(fname+".bitmap", dtype=int, sep=" ")     
+        x1 = np.fromfile(f"{fname}.bitmap", dtype=int, sep=" ")     
 
         # SGM parameters
         p, q = sgm_parameters(x1)
