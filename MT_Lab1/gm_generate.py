@@ -51,11 +51,7 @@ def gm_generate(len, p, q, h):
             # transition into the other state
             state ^= 1
         # add a binary value to output
-        if state == 1 and random.uniform(0, 1) > h:
-            seq[i] = 1
-        else:
-            seq[i] = 0
- 
+        seq[i] = 1 if state == 1 and random.uniform(0, 1) > h else 0
     return seq
 
 
