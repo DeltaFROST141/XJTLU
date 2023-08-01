@@ -65,7 +65,7 @@ def dfr_simulation(
 
     # initialize variables.
     idx = -1
-    for j in range(2):
+    for _ in range(2):
         idx = f_type.index('I', idx+1)
     gop_size = f_number[idx] # N.B.: the frame number of the 2nd I frame is GOP size.
     num_b_frames = f_number[1] - f_number[0] - 1 # between I and the 1st P frames
@@ -79,11 +79,7 @@ def dfr_simulation(
         # frame loss
         pkt_losses = sum(losses[num_pkts_received:num_pkts_received+f_pkts[i]])
         num_pkts_received += f_pkts[i]
-        if fec:
-            frame_loss = False if pkt_losses <= 8 else True
-        else:
-            frame_loss = False if pkt_losses == 0 else True
-
+        frame_loss = pkt_losses > 8 if fec else pkt_losses != 0
         # frame decodability
         if not frame_loss:
             match f_type[i]:
@@ -92,30 +88,31 @@ def dfr_simulation(
                     num_frames_decoded += 1
                 case 'P':
                     # check frame dependency.
-                    if (i_frame_number == f_number[i]-num_b_frames-1
-                            or p_frame_number == f_number[i]-num_b_frames-1):
+                    if (
+                        i_frame_number == f_number[i] - num_b_frames - 1
+                        or p_frame_number == f_number[i] - num_b_frames - 1
+                    ):
                         num_frames_decoded += 1
                         p_frame_number = f_number[i]
                 case 'B':
                     # check frame dependency.
-                    last_ref_frame_number = ((f_number[i] // (num_b_frames + 1))
-                                             * (num_b_frames + 1))
-                    next_ref_frame_number = last_ref_frame_number + num_b_frames + 1
+                    last_ref_frame_number = (
+                        f_number[i] // (num_b_frames + 1)
+                    ) * (num_b_frames + 1)
+                    next_ref_frame_number = (
+                        last_ref_frame_number + num_b_frames + 1
+                    )
                     dependency_passed = False
-                    if next_ref_frame_number % gop_size == 0:
-                        # N.B.: If the next reference frame is I frame,
-                        # we need to check both next I and last P frames.
-                        if (p_frame_number == last_ref_frame_number and
-                                i_frame_number == next_ref_frame_number):
-                            dependency_passed = True
-                    else:
-                        # N.B.: If the next reference frame is P frame,
-                        # we need to check only the next P frame because
-                        # the status of the next P frame reflects that of
-                        # the last P frame as well.
-                        if p_frame_number == next_ref_frame_number:
-                            dependency_passed = True
-
+                    if (
+                        next_ref_frame_number % gop_size == 0
+                        and (
+                            p_frame_number == last_ref_frame_number
+                            and i_frame_number == next_ref_frame_number
+                        )
+                        or next_ref_frame_number % gop_size != 0
+                        and p_frame_number == next_ref_frame_number
+                    ):
+                        dependency_passed = True
                     if dependency_passed:
                         num_frames_decoded += 1
                 case _:

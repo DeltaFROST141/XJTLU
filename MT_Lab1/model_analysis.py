@@ -44,8 +44,7 @@ def rl_histograms(tname, x1, mname, x2):
     titles = ["Zero", "One"]
 
     fig = plt.figure()
-    axs = []
-    axs.append(fig.add_subplot(2, 2, 1)) # zl1
+    axs = [fig.add_subplot(2, 2, 1)]
     axs.append(fig.add_subplot(2, 2, 2)) # ol1
     axs.append(fig.add_subplot(2, 2, 3, sharex=axs[0], sharey=axs[0])) # zl2
     axs.append(fig.add_subplot(2, 2, 4, sharex=axs[1], sharey=axs[1])) # ol2
@@ -57,7 +56,9 @@ def rl_histograms(tname, x1, mname, x2):
     fig.supxlabel('Run lengths')
     fig.supylabel('Frequency')
     plt.tight_layout()
-    plt.savefig(tname+"_"+mname.lower()+"_hist.pdf", format="pdf", bbox_inches="tight")
+    plt.savefig(
+        f"{tname}_{mname.lower()}_hist.pdf", format="pdf", bbox_inches="tight"
+    )
     plt.close('all')
 
 
@@ -73,10 +74,9 @@ def rl_psds(tname, x1, mname, x2):
     """
     xs = [x1, x2]
     lbls = ["Real", mname]
-    
+
     fig = plt.figure()
-    axs = []
-    axs.append(fig.add_subplot(2, 1, 1))
+    axs = [fig.add_subplot(2, 1, 1)]
     axs.append(fig.add_subplot(2, 1, 2, sharex=axs[0], sharey=axs[0]))
     for i in range(len(axs)):
         axs[i].psd(xs[i], NFFT=1024, label=lbls[i])
@@ -87,5 +87,7 @@ def rl_psds(tname, x1, mname, x2):
     fig.supxlabel('Normalized Frequency')
     fig.supylabel('Power Spectral Density [dB/Hz]')
     plt.tight_layout()
-    plt.savefig(tname+"_"+mname.lower()+"_psd.pdf", format="pdf", bbox_inches="tight")
+    plt.savefig(
+        f"{tname}_{mname.lower()}_psd.pdf", format="pdf", bbox_inches="tight"
+    )
     plt.close('all')

@@ -24,11 +24,7 @@ def conv_interleave(x, delays):
         delays (list): branch delays
     """
 
-    # initialize shift registers (SRS) based on deque
-    srs = [] # list of SRSs
-    for i in range(len(delays)):
-        srs.append(collections.deque(delays[i]*[0], delays[i]))
-
+    srs = [collections.deque(delays[i]*[0], delays[i]) for i in range(len(delays))]
     nb = len(delays) + 1 # number of branches
     cb = 0               # current branch
     y = np.empty_like(x)
@@ -53,11 +49,7 @@ def conv_deinterleave(x, delays):
         delays (list): branch delays
     """
 
-    # initialize shift registers (based on deque)
-    srs = []
-    for i in range(len(delays)):
-        srs.append(collections.deque(delays[i]*[0], delays[i]))
-
+    srs = [collections.deque(delays[i]*[0], delays[i]) for i in range(len(delays))]
     nb = len(delays) + 1 # number of branches
     cb = 0               # current branch
     y = np.empty_like(x)
@@ -82,7 +74,7 @@ def print_binary(x, desc=None):
     if desc is None:
         print(", ".join(map(str, x)))
     else:
-        print(desc + ": " + ", ".join(map(str, x)))
+        print(f"{desc}: " + ", ".join(map(str, x)))
 
 
 if __name__ == '__main__':
