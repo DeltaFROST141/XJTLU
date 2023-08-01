@@ -33,6 +33,7 @@ if __name__ == "__main__":
         type=int)
     
     # debugging
+
     parser.add_argument('--debug', dest='debug', action='store_true')
     parser.add_argument('--no-debug', dest='debug', action='store_false')
     parser.set_defaults(debug=False)
@@ -70,7 +71,7 @@ if __name__ == "__main__":
                 dfr = dfr_simulation(
                     10000,
                     pl,
-                    "starWars4_verbose",
+                    "starWars4_verbose.txt",
                     fec,
                     ci)
                 df.loc[len(df)] = [i, pl, dfr]

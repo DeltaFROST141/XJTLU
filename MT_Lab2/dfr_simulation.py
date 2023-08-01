@@ -27,7 +27,7 @@ def dfr_simulation(
         loss_probability,
         video_trace,
         fec,
-        ci):
+        ci):  # sourcery skip: low-code-quality
 
     # N.B.: Obtain the information of the whole frames to create a loss
     # sequence in advance due to the optional convolutional
@@ -50,6 +50,7 @@ def dfr_simulation(
     n_pkts = sum(f_pkts) # the number of packets for the whole frames
     if ci:
         # apply convolutional interleaving/deinterleaving.
+
         delays = "17,34,51,68,85,102,119,136,153,170,187"
         d1 = [int(i) for i in delays.split(',')]
         d2 = d1[::-1] # d1 reversed
@@ -57,6 +58,7 @@ def dfr_simulation(
         # 1. Append 2244 zeros before interleaving.
         # 2. Interleaved sequence experiences symbol losses.
         # 3. Remove leading 2244 elements after deinterleaving.
+
         x = sgm_generate(len=n_pkts+2244, p=p, q=q)
         y = conv_deinterleave(x, d2)
         losses = y[2244:]
@@ -148,7 +150,7 @@ if __name__ == '__main__':
         "-V",
         "--video_trace",
         help="video trace file; default is 'starWars4_verbose'",
-        default="starWars4_verbose",
+        default="starWars4_verbose.txt",
         type=str)
     
     # convolutional interleaving/deinterleaving (CI)

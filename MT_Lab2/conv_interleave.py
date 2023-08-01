@@ -23,11 +23,12 @@ def conv_interleave(x, delays):
         x (numpy array): input symbols
         delays (list): branch delays
     """
+    # edit by sourcery
+    # srs = [collections.deque(delays[i]*[0], delays[i]) for i in range(len(delays))]
 
-    # initialize shift registers (SRS) based on deque
-    srs = [] # list of SRSs
+    srs = []  # list of SRSs
     for i in range(len(delays)):
-        srs.append(collections.deque(delays[i]*[0], delays[i]))
+        srs.append(collections.deque(delays[i] * [0], delays[i]))
 
     nb = len(delays) + 1 # number of branches
     cb = 0               # current branch
