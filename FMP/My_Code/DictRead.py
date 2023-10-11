@@ -1,7 +1,7 @@
 from scipy.io import loadmat
 
 # 加载.mat文件，在 Windows 下需要更改路径
-data = loadmat('BCI_data.mat')
+data = loadmat('Data/BCI_data.mat')
 
 # 提取键为C1和C2的数据
 C1_data = data['C1']

@@ -8,9 +8,9 @@ def gettime(x, w):
     y = [] # 存储输出矩阵
     
     for i in range(t-1):
-        x1 = x[i, :]
+        x1 = x[i,:]
         for j in range(i+1, t):
-            x2 = x[j, :]
+            x2 = x[j,:]
             for k in range(g):
                 t1 = [np.min(x1[k*w:(k+1)*w]), np.max(x1[k*w:(k+1)*w])]
                 t2 = [np.min(x2[k*w:(k+1)*w]), np.max(x2[k*w:(k+1)*w])]
