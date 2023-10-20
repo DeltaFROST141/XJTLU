@@ -1,5 +1,7 @@
 import numpy as np
 
+# ! The enhanced edition about getting the time domain
+# ! ONLY use two layers loops
 
 def gettime(x, w):
     t, l = x.shape
