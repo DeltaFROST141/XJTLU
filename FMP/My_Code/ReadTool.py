@@ -1,7 +1,5 @@
 import numpy as np
 import scipy.io
-import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
 def load_and_inspect_mat_file(filepath):

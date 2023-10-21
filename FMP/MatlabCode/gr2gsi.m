@@ -12,6 +12,7 @@ for i = 1:x
         for k = 1:g/2
             r(k) = OverR(gc,g1(:,(k-1)*2+1:k*2));
         end
+        end
         y(i,j) = sum(r);
     end
 end

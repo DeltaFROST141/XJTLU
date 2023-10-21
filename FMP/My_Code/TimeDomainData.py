@@ -32,7 +32,7 @@ for i in range(train_data_C1.shape[0]):
 
         features_results.append(features)
 
-print(features_results)
+# print(features_results)
 
 # 此时数据是已经划分完测试集和训练集的三维数据
 # pca = PCA(n_components=5000)
