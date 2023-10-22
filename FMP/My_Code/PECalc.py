@@ -4,7 +4,6 @@ from itertools import permutations
 def pea(y, m, t):
     ly = len(y)
     
-    
     permlist = list(permutations(range(m)))
     c = np.zeros(len(permlist))
     print(permlist)

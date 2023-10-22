@@ -22,12 +22,8 @@ def gettime(x, w):
             combined = np.column_stack((T1.ravel(), T2.ravel()))
             y[n, :, 2 * k:2 * (k + 1)] = combined
         n += 1
-
+        
+    print(y)
     return y
+    
 
-
-# Testing
-x = np.random.rand(4, 4)
-w = 2
-result = gettime(x, w)
-print(result)

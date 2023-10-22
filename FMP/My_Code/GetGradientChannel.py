@@ -61,5 +61,5 @@ def getgradient(x, w):
             # y[idx, 1, 2 * k] = G2_min
             # y[idx, 0, 2 * k + 1] = G1_max
             # y[idx, 1, 2 * k + 1] = G2_max
-
+    print(y)
     return y
