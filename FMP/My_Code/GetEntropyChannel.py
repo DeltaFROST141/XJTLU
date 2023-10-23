@@ -1,28 +1,34 @@
 import numpy as np
 import itertools
-import PECalc as PECalc
+from PECalc import pea
 
 def mapminmax(arr, mi, mx):
     return (arr - np.min(arr)) * (mx - mi) / (np.max(arr) - np.min(arr)) + mi 
 
 
-def getgradient(x, w):
+def getentropy(x, w):
+    
     t, l = x.shape
-    g = l // w
+    # ! divide the long trail into sub trails, trails number are g
+    g = l // w  
 
     # ! can find the maximum and minimum directly
     mi = np.min(x)
     mx = np.max(x)
 
-    # ! store the gradient values
-    grad = np.zeros((t, g, w))
+    # ! store the entropy values
+    # for example: (1, 3, 1)
+    # means that find the second trails and the fourth windows
+    # and the number of [(0, 2, 1)]
+    entropy = np.zeros((t, g, 6))
     
+    # ! loop over each window and calculate the entropy
     for i in range(t):
         x1 = x[i, :]
         for k in range(g):
-            entropy[i, k, :] = np.PECalc(x1[(k * w):((k + 1) * w)] ,3 ,1)
+            entropy[i, k, :] = pea(x1[(k * w):((k + 1) * w)] ,3 ,1)
             
-    entropy = np.reshape(mapminmax(np.reshape(grad, -1), mi, mx), (t, g, w))
+    entropy = np.reshape(mapminmax(np.reshape(entropy, -1), mi, mx), (t, g, 6))
     
     comb_indices = list(itertools.combinations(range(t), 2))
     y = np.zeros((len(comb_indices), 2, 2 * g))
@@ -49,5 +55,6 @@ def getgradient(x, w):
             # ! represent the overlapping structure
             y[idx, :, 2 * k] = np.column_stack((E1_min.ravel(), E1_max.ravel()))
             y[idx, :, 2 * k + 1] = np.column_stack((E2_min.ravel(), E2_max.ravel()))
-
+    
+    # print(y)
     return y
